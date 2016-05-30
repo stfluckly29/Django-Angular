@@ -1,0 +1,133 @@
+<modal-dialog show="show_cert_upload" width="550px" height="300px">
+  <div class="modal popup import_string drop-box">
+    <h3>Import</h3>
+    <div id="step-2">
+      <fieldset style="margin-top: 0px;padding-bottom: 25px;padding-top: 25px;">
+        <label style="line-height: 20px">Password: </label>
+        <input id="password" ng-model="cert_pwd" class="password" type="password" style="float: none;"/>
+        <br>
+        <label style="font-size: 11px;">(Leave blank if password is not set)</label>
+      </fieldset>
+      <fieldset>
+        <button class="btn-blue btn" id="select_file" ng-file-select ng-file-change="upload(file, cert_pwd)" ng-model="file" multiple="false" allow-dir="false" accept="*.p12">Select p12 file</button>
+      </fieldset>
+    </div>
+  </div>
+</modal-dialog>
+
+<section class="container">
+  <div>
+    <header>
+      <h1><span><a href='#/apps'>Dashboard</a> / <a href="#/apps/{{app.id}}/view">{{ app.name }}</a> /</span> App settings</h1>
+
+      <div class="header_btns">
+        <button class="btn btn-blue save-btn" ng-click="save(app)">Save Settings</button>
+        <a class="btn btn-gray cancel-btn" href="#app/{{ app.id }}/view">Cancel</a>
+        <button class="btn btn-gray delete-btn" ng-click="deleteApp(app.id)">Delete App</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <div class="app_settings_wrapper">
+        <div class="success-nofication" class="slide-animation" ng-if="success" ng-animate-children>
+          <span><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Successfully update.</span>
+        </div>
+        <div class="app_settings">
+          <fieldset>
+            <h3>App Settings</h3>
+          </fieldset>
+
+          <fieldset>
+            <label>Name</label>
+            <input type="text" name="app_name" id="app_name" ng-model="app.name" required>
+          </fieldset>
+
+          <fieldset>
+            <label>Code to initiate <span class="fa fa-question-circle tip fade" data-trigger="hover" data-placement="bottom" data-type="success" data-title="Use this code to setup your app." bs-tooltip></span></label>
+            <div class="bar">
+              <p>
+              //Objective-C
+              <br>
+              [InAppTranslation <ins class="blue">start</ins>: <ins class="green">@"{{ app.token }}"</ins>];
+              <br><br>
+              //Swift
+              <br>
+              InAppTranslation<ins class="blue">.start</ins>(<ins class="green">"{{ app.token }}"</ins>)
+              </p>
+            </div>
+          </fieldset>
+        </div>
+        <!--div class="app_settings">
+          <fieldset>
+            <h3>Push Certifications</h3>
+          </fieldset>
+          <div class="clearfix"></div>
+          <div ng-if="!dev_cert" class="dev-cert cert-detail">
+            <fieldset>
+              <label>Development Certificate</label>
+              <button class="btn btn-gray cancel-btn" ng-click="show_upload('develop');">Select your certificate</button>
+            </fieldset>
+          </div>
+          <div ng-if="dev_cert" class="dev-cert cert-detail">
+            <fieldset>
+              <label>Certificate name</label>
+              <input type="text" ng-model="dev_cert.name" READONLY>
+            </fieldset>
+            <fieldset>
+              <label>Certificate bundle identifier</label>
+              <input type="text" ng-model="dev_cert.bundle_identifier" READONLY>
+            </fieldset>
+            <fieldset>
+              <label>Certificate type</label>
+              <label>Development</label>
+            </fieldset>
+            <fieldset>
+              <label>Expiration Date</label>
+              <label>{{ dev_cert.expiry_date }}</label>
+            </fieldset>
+            <fieldset>
+              <label>Action</label>
+              <label>
+                <a class="blue" href="{{api_url+'/cert-download?app='+app.id+'&cert='+dev_cert.id+'&token='+token}}"><i class="fa fa-cloud-download"></i>Download</a>
+                <span class="red" ng-click="delete_cert('dev');"><i class="fa fa-times"></i>Delete</span>
+              </label>
+            </fieldset>
+          </div>
+          <div class="clearfix"></div>
+          <div ng-if="!prod_cert" class="prod-cert cert-detail">
+            <fieldset>
+              <label>Production Certificate</label>
+              <button class="btn btn-gray cancel-btn" ng-click="show_upload('product');">Select your certificate</button>
+            </fieldset>
+          </div>
+          <div ng-if="prod_cert" class="prod-cert cert-detail">
+            <fieldset>
+              <label>Certificate name</label>
+              <input type="text" ng-model="prod_cert.name" READONLY>
+            </fieldset>
+            <fieldset>
+              <label>Certificate bundle identifier</label>
+              <input type="text" ng-model="prod_cert.bundle_identifier" READONLY>
+            </fieldset>
+            <fieldset>
+              <label>Certificate type</label>
+              <label>Production</label>
+            </fieldset>
+            <fieldset>
+              <label>Expiration Date</label>
+              <label>{{ prod_cert.expiry_date }}</label>
+            </fieldset>
+            <fieldset>
+              <label>Action</label>
+              <label>
+                <a class="blue" href="{{api_url+'/cert-download?app='+app.id+'&cert='+dev_cert.id+'&token='+token}}"><i class="fa fa-cloud-download"></i>Download</a>
+                <span class="red" ng-click="delete_cert('prod');"><i class="fa fa-times"></i>Delete</span>
+              </label>
+            </fieldset>
+          </div>
+          <div class="clearfix"></div>
+        </div-->
+      </div>
+    </div>
+  </div></section>

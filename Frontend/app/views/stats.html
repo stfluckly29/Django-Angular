@@ -1,0 +1,56 @@
+<section class="container" ng-cloak>
+  <div>
+    <header>
+      <h1>Stats</h1>
+    </header>
+
+    <div class="content">
+      <div class="summary-table">
+        <table style="width: 100%;">
+          <tbody class="summary">
+          <tr>
+            <td>
+              Number of Signup in Total
+            </td>
+            <td>
+              {{ stats.total_signup }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Number of Words added in Total
+            </td>
+            <td>
+              {{ stats.total_word }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Number of Signup today
+            </td>
+            <td>
+              {{ stats.today_signup }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Number of Login today
+            </td>
+            <td>
+              {{ stats.today_login }}
+            </td>
+          </tr>
+          <tr ng-repeat="(k,v) in stats.api_access">
+            <td>
+              {{k}}
+            </td>
+            <td>
+              {{ v }}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div></section>

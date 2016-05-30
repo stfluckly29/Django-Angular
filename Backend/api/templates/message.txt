@@ -1,0 +1,10 @@
+Hi there! You've received a message from a visitor while you were away.
+
+The user's message follows:
+
+----
+{{msg}}
+----
+
+Name: {{name}}
+E-mail: {{email}}

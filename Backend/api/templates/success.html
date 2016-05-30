@@ -1,0 +1,7 @@
+{% if user %}
+<h1>Dear {{user.username}},</h1>
+<h2>Your email address has been verified successfully.</h2>
+<h2>Thank you!</h2>
+{% else %}
+<h1>Invalid URL</h1>
+{% endif %}

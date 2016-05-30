@@ -1,0 +1,14 @@
+Hi :)
+
+Welcome to InAppTranslation!
+
+To make sure your privacy is being protected, we just need to confirm this email address is yours. Please click the link below :)
+{{ url }}
+
+If you have any questions, feel free to contact us.
+Even if you find everything alright, let us know that too :D
+
+Have a great day,
+Takamitsu Mizutori, InAppTranslation developer.
+mizutori@goldrushcomputing.com
+www.inapptranslation.com

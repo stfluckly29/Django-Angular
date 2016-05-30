@@ -1,0 +1,52 @@
+<section class="container" ng-cloak>
+  <div>
+    <header>
+      <h1>Dashboard</h1>
+
+      <div class="header_btns">
+        <button class="btn btn-blue reg-btn" ng-click="toggleModal()">Register a new app</button>
+        <modal-dialog show="appRegShown" width="500px" height="237px"  >
+        <div class="modal popup" id="reg_new">
+          <h3>Register a new app</h3>
+          <form style="background:#FFFFFF;" id="register-form" name="register-form" method="post" autocomplete="off" ng-submit="registerApp()">
+            <label>Choose your app’s name:</label>
+            <input type="text" placeholder="e.g. Safari" id="app-name" name="app-name" required="" ng-model="app_name">
+            <button class="cancel" type="button" ng-click="toggleModal()">Cancel</button>
+            <button class="btn btn-blue register" type="submit">Register</button>
+          </form>
+        </div>
+      </modal-dialog>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="summary-table" resizable ng-style="{ 'max-height':  windowHeight-170}">
+        <table>
+          <thead>
+          <tr>
+            <th class="t_appname">App Name</th>
+            <th class="t_appid">App ID</th>
+            <th class="t_notrans">Number of translations</th>
+            <th class="t_action"></th>
+          </tr>
+          </thead>
+          <tbody class="summary">
+
+            <tr ng-repeat="app in apps">
+            <td class="t_appname">
+              <a href="#apps/{{app.id}}/view">{{ app. name }}</a>
+            </td>
+            <td class="t_appid">
+              {{ app.id }}
+            </td>
+            <td class="t_notrans">
+              {{ app.total_count }}
+            </td>
+            <td class="t_action">
+              <a href="#apps/{{app.id}}/edit"><span class="fa fa fa-cog south fade" title="edit app"></span></a>
+            </td>
+          </tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div></section>

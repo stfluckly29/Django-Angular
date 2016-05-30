@@ -1,0 +1,59 @@
+<section class="container">
+<form autocomplete="off" name="profile" ng-submit="submitForm(profile.$valid)">
+  <header>
+    <h1>Settings</h1>
+
+    <div class="header_btns">
+      <button class="btn btn-blue save-btn" type="submit">Save Settings</button>
+      <a class="btn btn-gray cancel-btn" href="#main">Cancel</a>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="app_settings_wrapper">
+      <div class="success-nofication" ng-if="success">
+        <span><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Successfully saved.</span>
+      </div>
+
+      <div class="error-notification" id="pofile-error" ng-if="error_msg.length > 1">
+        <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;<span></span>
+      </div>
+      <div class="app_settings_wrapper half" style="padding-right: 30px;">
+        <div class="app_settings half-left">
+          <fieldset>
+            <h3>Personal Information</h3>
+          </fieldset>
+
+          <fieldset>
+            <label>Name</label>
+            <input id="username" name="username" type="text" ng-model="user.username" required>
+          </fieldset>
+
+          <fieldset>
+            <label>Company</label>
+            <input id="company" name="company" type="text" ng-model="user.company" required>
+          </fieldset>
+        </div>
+      </div>
+      <div class="app_settings_wrapper half">
+        <div class="app_settings half-right">
+          <fieldset>
+            <h3>Change Password</h3>
+          </fieldset>
+
+          <fieldset>
+            <label>New Password</label>
+            <input id='password' type='password' name="password" data-rule-minlength="7" ng-model="user.password">
+          </fieldset>
+
+          <fieldset>
+            <label>Password confirmation</label>
+            <input id='password-confirmation' type='password' name="password-confirmation" ng-model="user.password1">
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</section>

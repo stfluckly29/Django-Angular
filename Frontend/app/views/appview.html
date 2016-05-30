@@ -1,0 +1,237 @@
+<!-- Start of Import String Modal -->
+<modal-dialog show="import_step1" width="550px" height="300px" dropzone="dropzoneConfig">
+  <div class="modal popup import_string">
+    <h3>Import Localizable.strings</h3>
+    <div id="step-1">
+      <fieldset style="padding-top: 20px;">
+        <label>Please select language to import</label>
+      </fieldset>
+      <fieldset>
+        <div class="selectbox">
+          <select id="import_new_lang" ng-model="import_lang">
+            <option value disabled selected >Language</option>
+            <option value="{{key}}" ng-repeat="(key,val) in langData">{{val}}</option>
+          </select>
+        </div>
+      </fieldset>
+      <fieldset>
+        <button class="btn-blue btn" id="import_next" ng-click="import_next();">Next</button>
+      </fieldset>
+    </div>
+  </div>
+</modal-dialog>
+
+
+<modal-dialog show="import_step2" width="550px" height="300px">
+  <div class="modal popup import_string drop-box" ng-file-drop ng-file-change="upload(file)" ng-model="file" multiple="false"  allow-dir="false" accept="*.strings" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}">
+    <h3>Import Localizable.strings</h3>
+    <div id="step-2">
+      <fieldset style="padding-top: 20px;margin-bottom: 0px;">
+        <label>Please drop <strong>Localizable.strings</strong> file anywhere to upload</label>
+      </fieldset>
+      <fieldset style="margin-top: 0px;padding-bottom: 5px;">
+        <label style="color: #aeaeae;line-height: 20px">Or</label>
+      </fieldset>
+      <fieldset>
+        <button class="btn-blue btn" id="select_file" ng-file-select ng-file-change="upload(file)" ng-model="file" multiple="false" allow-dir="false" accept="*.strings">Select file</button>
+      </fieldset>
+    </div>
+  </div>
+</modal-dialog>
+
+<modal-dialog show="push_popup" width="550px" height="200px">
+  <div class="modal popup import_string">
+    <h3>Push translation</h3>
+    <div>
+      <fieldset style="padding-top: 20px;margin-bottom: 0px;">
+        <label>Please select push target</label>
+      </fieldset>
+      <fieldset>
+        <button class="btn-gray btn" ng-click="send_push('dev');">Development</button>&nbsp;&nbsp;&nbsp;
+        <button class="btn-gray btn" ng-click="send_push('prod');">Production</button>
+      </fieldset>
+    </div>
+  </div>
+</modal-dialog>
+
+<modal-dialog show="show_export" width="550px" height="200px">
+  <div class="modal popup import_string">
+    <h3>Export</h3>
+    <div>
+      <fieldset style="padding-top: 20px;margin-bottom: 0px;">
+        <label>Please select OS</label>
+      </fieldset>
+      <fieldset>
+        <button class="btn-gray btn" ng-click="export('ios');">iOS</button>&nbsp;&nbsp;&nbsp;
+        <button class="btn-gray btn" ng-click="export('android');">Android</button>
+      </fieldset>
+    </div>
+  </div>
+</modal-dialog>
+<!-- End of Import String Modal -->
+<section class="container">
+  <div>
+    <header>
+      <h1><span><a href="#apps">Dashboard /</a></span> {{ app.name }}</h1>
+      <div class="header_btns">
+        <a class="btn btn-blue app-btn" href="#apps/{{ app.id }}/edit">App Settings</a>
+        <!--button class="btn btn-gray push-btn" ng-click="push_popup=true;">Push translation</button-->
+        <button class="btn btn-gray import-btn" style="margin-right: 10px;" ng-click="import_step1 = true;">Import</button>
+        <button class="btn btn-gray export-btn" ng-click="show_export=true;">Export</button>
+
+
+      </div>
+    </header>
+    <div class="content">
+      <div class="language_search">
+        <!--div class="searchbox">
+          <input type="search" placeholder="Search" id="keyword">
+        </div-->
+
+        <!--div class="selectbox">
+          <select name="sortby" id="sort_dir">
+            <option value="-1" disabled="" selected="">Sort by</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+
+        <div class="selectbox">
+          <select name="lang" id="sort_lang">
+            <option value="" selected="">Language</option>
+          </select>
+        </div-->
+
+        <div class="langbox">
+          <a class="btn btn-blue lang" href="javascript:void(0);" data-template="add-lang.html" data-animation="am-flip-x" data-auto-close="1" data-placement="bottom" bs-popover >Add new language
+          </a>
+        </div>
+      </div>
+      <div class="language_table" scroll-fix ng-style="{ 'height':  windowHeight-280, 'width': '100%'}" resizable>
+        <div class="body-inner">
+          <div id="dummy-box"></div>
+          <div id="top-link-wrapper" style="left: 0px;">
+            <div class="fixed-header-cell">
+              KEY
+            </div>
+            <a href="javascript:void(0);" class="prop word top-link" id="btn_tooltip" data-template="add-word.html" data-animation="am-flip-x" data-auto-close="1" data-placement="bottom" bs-popover >+</a>
+          </div>
+          <div class="row header" ng-style="row_width">
+            <div class="head-cell fixed">
+              KEY
+            </div>
+            <div ng-repeat="lang in data.langs" class="head-cell">
+              {{ langData[lang] }}
+            </div>
+            <div class="head-cell" ng-if="!data.langs.length"></div>
+          </div>
+
+            <div ng-repeat="word in data.words" class="row" ng-style="row_width">
+              <div class="cell fixed" data-template="key-modal.html" data-animation="am-flip-x" data-auto-close="1"  data-placement="auto bottom" data-viewport="{selector: '.language_table'}" bs-popover>
+                {{ word.name }}
+              </div>
+              <div class="cell" ng-if="!data.langs.length"></div>
+              <div ng-repeat="lang in data.langs" class="cell cell-editable" ng-class="{'first-cell': $index == 0}" data-template="add-translation.html" data-animation="am-flip-x" data-auto-close="1"  data-placement="auto bottom" data-viewport="{selector: '.language_table', padding: 50}" bs-popover>
+                {{data.translations[word.id][lang].name}}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+      <div class="row-footer" style="width: 100%; height: 40px;">
+        <select ng-model="data.page_size" ng-change="reload()" ng-options="obj.value as obj.text for obj in size_options">
+
+        </select>
+        <span class="small">Rows/Page</span>
+        <a class="prev" ng-disabled="!data.has_previous" ng-click="load_prev_page()"></a>
+        {{ data.start_index }} - {{ data.end_index}} of {{ data.total_count }}
+        <a class="next" ng-disabled="!data.has_next" ng-click="load_next_page()"></a>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="text/ng-template" id="add-lang.html">
+  <div class="popover ">
+    <div class="arrow"></div>
+    <div class="popover-content">
+      <div class="add_lang_upper">
+        <h3>Add new language</h3>
+        <fieldset>
+          <div class="selectbox">
+            <select ng-model="new_lang">
+              <option value disabled selected >Language</option>
+              <option value="{{item.val}}" ng-repeat="item in avail_langs">{{item.caption}}</option>
+            </select>
+          </div>
+          <button class="btn-blue btn" style="width: 70px;float: right;" id="btn_add_lang" ng-click="addLang(new_lang)">Create</button>
+        </fieldset>
+      </div>
+    <div class="add_lang_bottom">
+      <fieldset ng-repeat="lang in data.langs">
+        {{ langData[lang] }}
+        <i class="fa fa-times" ng-click="removeLang($index)"></i>
+      </fieldset>
+    </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="key-modal.html">
+  <div class="popover small key-modal">
+    <div class="arrow"></div>
+    <div class="popover-content">
+      <div class="add_local_upper">
+        <h3 style="line-height: 30px;">Edit Key</h3>
+        <fieldset>
+          <textarea class="new_localword" type="text" ng-init="updated_key=word.name" value="{{ word.name }}" ng-model="updated_key" autofocus />
+          <br>
+          <button class="btn btn_add_localword" ng-click="$hide()">Cancel</button>
+          <button ng-if="updated_key" class="btn btn_add_localword" ng-click="deleteKey(this);">Delete</button>
+          <button ng-if="updated_key" class="btn-blue btn btn_add_localword" ng-click="updateKey(this);">OK</button>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="add-translation.html">
+  <div class="popover small">
+    <div class="arrow"></div>
+    <div class="popover-content">
+      <div class="add_local_upper">
+        <h3 ng-if="data.translations[word.id][lang].name" style="line-height: 30px;">Edit translation</h3>
+        <h3 ng-if="!data.translations[word.id][lang].name" style="line-height: 30px;">Add translation</h3>
+        <fieldset>
+          <textarea class="new_localword" type="text" ng-init="local_word=data.translations[word.id][lang].name" value="{{ data.translations[word.id][lang].name }}" ng-model="local_word" autofocus />
+          <br>
+          <button class="btn btn_add_localword" ng-click="$hide()">Cancel</button>
+          <button ng-if="data.translations[word.id][lang].name" class="btn-blue btn btn_add_localword" ng-click="localWordInput=true;$hide();addTranslation(this);">Done</button>
+          <button ng-if="!data.translations[word.id][lang].name" class="btn-blue btn btn_add_localword" ng-click="localWordInput=true;$hide();addTranslation(this);">Add</button>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="add-word.html">
+  <div class="popover word">
+    <div class="arrow"></div>
+    <div class="popover-content">
+      <div class="add_word_upper">
+        <h3>Add new key</h3>
+        <fieldset>
+          <input id="txt_new_word" type="text" ng-model="new_word" placeholder="Type new key..." focus-me="focusWordInput" autofocus/>
+        </fieldset>
+      </div>
+      <div class="add_word_bottom">
+        <fieldset>
+          <button id="btn_add_continue" class="btn btn-gray" ng-click="focusWordInput=true;addWord(this, false);">Save and add another</button>
+          <button id="btn_save_word" class="btn btn-blue" ng-click="addWord(this, true);">Save</button>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</script>
